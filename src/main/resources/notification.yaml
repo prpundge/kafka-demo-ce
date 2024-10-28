@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Banking API Specification for account operations Notification
+  description: |-
+    A simple banking API that allows two operations:
+    - Notification on get account balance given account number
+    - Notification deposit amount to a account
+  version: 1.0-SNAPSHOT
+servers:
+  - url: http://localhost:8080/
+tags:
+  - name: Notification
+    description: Notification between bank accounts
+
+paths:
+  /notifications:
+    post:
+      summary: Create a new notification
+      description: Creates a new notification and returns the created notification.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        '201':
+          description: Notification created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '400':
+          description: Bad Request - Invalid input
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    Notification:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "New Message"
+        message:
+          type: string
+          example: "You have received a new message."
+        recipient:
+          type: string
+          example: "johndoe@example.com"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-10-26T12:00:00Z"
+      required:
+        - title
+        - message
+        - recipient
